@@ -20,7 +20,10 @@ class ReverseIT_API():
         URL = self.API_URL+"/search/hash"
         params = {'hash': hash}
         r = requests.post(URL, data=params, headers=self.headers)
-        return(r.headers) 
+        return(r.text)
+
+        
+        
 
 if 'name' == '__main__':
     ReverseIT_API()

@@ -1,4 +1,4 @@
-import hashlib, sys, os, os.path, argparse
+import hashlib, sys, os, os.path, argparse, json
 from api import ReverseIT_API
 
 parser = argparse.ArgumentParser(description="Generate SHA256 hashes and optionally check them against the Reverse.it API")
@@ -27,26 +27,18 @@ def main_func():
         if API:
             check_api = ReverseIT_API()
             print("[/] Checking against API")
-            print(check_api.search(sha256_hash))
+            api_response = check_api.search(sha256_hash)
+            if api_response == []:
+                print("No results for hash: {}".format(sha256_hash))
+            else:
+                json_respose = json.loads(api_response)
+                for item in json_respose:
+                    JOB_ID = item['job_id']
+
+                    print(item['job_id'])
         else:
             print("[X] Not checking against API")
 
 
 main_func()
 
-
-"""
-if len(sys.argv) < 2:
-    print(help_message())
-
-elif len(sys.argv) > 1 and sys.argv[1] == "--help":
-    print(help_message())
-
-elif len(sys.argv) > 1 and sys.argv[1] == "-h":
-    print(help_message())
-
-elif len(sys.argv) > 1 and sys.argv[1] and sys.argv[2] != "-a" or sys.argv[2] != "--api":
-    file_path = sys.argv[1]
-
-    print(check_file(file_path))
-"""
