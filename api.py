@@ -23,7 +23,8 @@ class ReverseIT_API():
         return(r.text)
 
         
-        
+    def upload(self, filename):
+        print("hello world")
 
 if 'name' == '__main__':
     ReverseIT_API()
